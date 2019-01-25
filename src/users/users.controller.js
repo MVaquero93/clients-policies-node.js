@@ -5,10 +5,10 @@ const authorize = require('../_helpers/authorize')
 const Role = require('../_helpers/role');
 
 // routes
-router.post('/authenticate', authenticate);     // public route
-router.get('/list/:name', authorize(Role.Admin), getAllPoliciesByName); // admin only
+router.post('/authenticate', authenticate);
+router.get('/list/:name', authorize(Role.Admin), getAllPoliciesByName);
 router.get('/:id', authorize(), getById);
-router.get('/:name', authorize(), getByUsername);
+router.get('/name/:name', authorize(), getByUsername);
 router.get('/get-user-policie/:id', authorize(Role.Admin), getUserFromPolicie)
 
 module.exports = router;
@@ -20,13 +20,6 @@ function authenticate(req, res, next) {
 }
 
 function getByUsername(req, res, next) {
-    const currentUser = req.user;
-    const id = req.params.name;
-
-    // only allow admins to access other user records
-    if (id !== currentUser.sub && currentUser.role !== Role.Admin) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
     userService.getByUsername(req.params.name)
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
