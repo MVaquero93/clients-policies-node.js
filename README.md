@@ -12,7 +12,7 @@ It will respond with user data and token. Copy the token and go to 'Authorizatio
 
 - localhost:4000/users/list/:name
 - localhost:4000/users/:id
-- localhost:4000/users/:name
+- localhost:4000/users/name/:name
 - localhost:4000/users/get-user-policie/:id
 
 For more Postman tips visit https://learning.getpostman.com/docs/postman/sending_api_requests/requests/
